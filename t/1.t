@@ -26,7 +26,7 @@ my $outfile = "t/1.$format";
 eval {
     open F, ">$outfile" or die "Can't open $outfile - $!\n";
     binmode F;
-    print F $i->$format;
+    print F $i->$format();
     close F;
 };
 ok !$@, "image file written as $outfile";

@@ -27,3 +27,7 @@ Revision history for GD::Graph::radar
 0.05  Wed Jul 9 2003
     - Added binmode to the file slurping done in the test.  Thanks
       DrForr!
+
+0.06  Thu Jul 10 203
+    - Holy #@$%!  I totally forgot to run my test, and it had a
+      $#@%ing syntax error in it.  *sob*

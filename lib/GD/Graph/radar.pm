@@ -8,7 +8,7 @@
 
 package GD::Graph::radar;
 
-$GD::Graph::pie::VERSION = '0.05';
+$GD::Graph::pie::VERSION = '0.06';
 
 use strict;
 
@@ -239,7 +239,7 @@ sub draw_data {
         $self->{graph}->fill($self->{xc}, $self->{yc}, $fc);
     }
 
-        # draw markers
+    # draw markers
     my $mark_incr = 1;
     if ($self->{absolute}) {
         $mark_incr = int ($max_val / $self->{nmarkers});
@@ -330,8 +330,8 @@ GD::Graph::radar - Make radial bar charts
   my $radar = GD::Graph::radar->new(400, 400);
 
   my $image = $radar->plot([
-      [qw(a    b  c    d    e    f    g  h    i)],
-      [   3.2, 9, 4.4, 3.9, 4.1, 4.3, 7, 6.1, 5 ]
+      [qw( a    b  c    d    e    f    g  h    i )],
+      [qw( 3.2  9  4.4  3.9  4.1  4.3  7  6.1  5 )]
   ]);
 
   print $image->png;  # Or ->gif, or ->jpeg, or...
