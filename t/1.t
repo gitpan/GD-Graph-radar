@@ -33,14 +33,19 @@ eval {
 ok !$@, "image file written as $outfile";
 ok -e $outfile, 'image file exists';
 
-__END__
-ok files_identical($outfile, "t/test.$format"), 'files are identical';
+# I cannot get an account on a Solaris box to fix this test.  Anyway,
+# I suspect that the problem is endian-ness...
+SKIP: {
+    skip 'Ack! Solaris! Run!', 1 if $^O eq 'solaris';
 
-# This sub lifted from KWILLIAMS' Image::Timeline test suite.
-sub files_identical {
-    my ($one, $two) = @_;
-    local $/;
-    my $data_one = do { local *F; open F, $one or die "$one: $!"; binmode F; <F>; };
-    my $data_two = do { local *F; open F, $two or die "$two: $!"; binmode F; <F>; };
-    return $data_one eq $data_two;
+    ok files_identical($outfile, "t/test.$format"), 'files are identical';
+
+    # This sub lifted from KWILLIAMS' Image::Timeline test suite.
+    sub files_identical {
+        my ($one, $two) = @_;
+        local $/;
+        my $data_one = do { local *F; open F, $one or die "$one: $!"; binmode F; <F>; };
+        my $data_two = do { local *F; open F, $two or die "$two: $!"; binmode F; <F>; };
+        return $data_one eq $data_two;
+    }
 }

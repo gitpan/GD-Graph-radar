@@ -40,3 +40,8 @@ Revision history for GD::Graph::radar
     - Fixed POD up.
     - Removed the file comparison test so that Solaris boxes don't
       whine.
+
+0.09  Wed Aug  6 2003
+    - No-one will give me an account on a Solaris box, so I added a
+      SKIP if $^O eq 'solaris' for the image comparison, in my test
+      script.

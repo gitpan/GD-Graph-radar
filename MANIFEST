@@ -2,6 +2,7 @@ Changes
 lib/GD/Graph/radar.pm
 Makefile.PL
 MANIFEST
+MANIFEST.SKIP
 README
 t/1.t
 t/test.gif

@@ -1,6 +1,6 @@
 package GD::Graph::radar;
 
-$GD::Graph::pie::VERSION = '0.08';
+$GD::Graph::pie::VERSION = '0.09';
 use strict;
 
 use GD;
