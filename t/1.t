@@ -34,11 +34,11 @@ ok -e $outfile, 'image file exists';
 
 ok files_identical($outfile, "t/test.$format"), 'files are identical';
 
-# This sub lifted, as is, from KWILLIAMS' Image::Timeline test suite.
+# This sub lifted from KWILLIAMS' Image::Timeline test suite.
 sub files_identical {
-  my ($one, $two) = @_;
-  local $/;
-  my $data_one = do {local *F; open F, $one or die "$one: $!"; <F>};
-  my $data_two = do {local *F; open F, $two or die "$two: $!"; <F>};
-  return $data_one eq $data_two;
+    my ($one, $two) = @_;
+    local $/;
+    my $data_one = do { local *F; open F, $one or die "$one: $!"; binmode F; <F>; };
+    my $data_two = do { local *F; open F, $two or die "$two: $!"; binmode F; <F>; };
+    return $data_one eq $data_two;
 }

@@ -8,7 +8,7 @@
 
 package GD::Graph::radar;
 
-$GD::Graph::pie::VERSION = '0.04';
+$GD::Graph::pie::VERSION = '0.05';
 
 use strict;
 
