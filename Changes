@@ -19,3 +19,7 @@ Revision history for GD::Graph::radar
 
 0.03.1  Tue Jul 8 2003  
     - Fixed the POD up a bit more.
+
+0.04  Wed Jul 9 2003
+    - Added "GD::Image->can('gif') &&" to the comparison test.
+      Thanks again Ken.

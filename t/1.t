@@ -20,7 +20,7 @@ eval {
 ok !$@, 'image plotted';
 
 # MrDath++ (A.K.A. DrMath++ && KWILLIAMS++)
-my $format  = GD::Image->new(1, 1)->gif ? 'gif' : 'png';
+my $format  = GD::Image->can('gif') && GD::Image->new(1, 1)->gif ? 'gif' : 'png';
 my $outfile = "t/1.$format";
 
 eval {
