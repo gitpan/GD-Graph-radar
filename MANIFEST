@@ -1,0 +1,7 @@
+Changes
+MANIFEST
+Makefile.PL
+README
+lib/GD/Graph/radar.pm
+original_diff.txt
+t/1.t

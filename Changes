@@ -1,0 +1,11 @@
+Revision history for GD::Graph::radar
+
+0.01  When?  Good question.  Maybe Brad will fill me in on that.  : )
+    - Modified the original GD::Graph::pie code.
+
+0.02  Tue Jul 8 2003
+    - Fixed a typo and added a defined check before operating.
+    - Added POD.
+    - Added all the files necessary for a proper CPAN distribution.
+    - Made the syntax match my personal, religous fanaticism-I mean
+      preference.
