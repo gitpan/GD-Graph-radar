@@ -1,5 +1,5 @@
-GD::Graph::radar
-================
+GD::Graph::radar version 0.03
+=============================
 
 INSTALLATION
 
@@ -12,7 +12,9 @@ To install this module type the following:
 
 DEPENDENCIES
 
-GD::Graph::pie
+GD
+
+GD::Graph
 
 COPYRIGHT AND LICENCE
 

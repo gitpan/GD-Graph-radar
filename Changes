@@ -9,3 +9,9 @@ Revision history for GD::Graph::radar
     - Added all the files necessary for a proper CPAN distribution.
     - Made the syntax match my personal, religous fanaticism-I mean
       preference.
+
+0.03  Tue Jul 8 2003
+    - Added image writing and comparison tests for gif and png.
+      Thanks Ken Williams!  : )
+    - Fixed the README file.
+    - Removed the pie-radar diff file.

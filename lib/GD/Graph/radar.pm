@@ -8,7 +8,7 @@
 
 package GD::Graph::radar;
 
-$GD::Graph::pie::VERSION = '0.02';
+$GD::Graph::pie::VERSION = '0.03';
 
 use strict;
 
@@ -326,18 +326,15 @@ GD::Graph::radar - Make radial bar charts
 =head1 SYNOPSIS
 
   use GD::Graph::radar;
+
   my $radar = GD::Graph::radar->new(400, 400);
+
   my $image = $radar->plot([
       [ qw( a    b  c    d    e    f    g  h    i )],
       [     3.2, 9, 4.4, 3.9, 4.1, 4.3, 7, 6.1, 5  ]
   ]);
 
-  binmode STDOUT;
-  $filename = "$0.png";
-  open PNG, ">$filename" or die "Can't open $filename - $!\n";
-  binmode PNG;
-  print PNG $image->png;
-  close PNG;
+  print $image->png;  # Or ->gif, if you're that sort of person.
 
 =head1 DESCRIPTION
 
