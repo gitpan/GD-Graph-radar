@@ -1,5 +1,5 @@
 use strict;
-use Test::More 'no_plan';#tests => 1;
+use Test::More tests => 6;
 
 BEGIN { use_ok 'GD::Graph::radar' };
 
@@ -19,8 +19,9 @@ eval {
 };
 ok !$@, 'image plotted';
 
-# MrDath++ (A.K.A. DrMath++ && KWILLIAMS++)
-my $format  = GD::Image->can('gif') && GD::Image->new(1, 1)->gif ? 'gif' : 'png';
+# MrDath++ (A.K.A. DrMath++, A.K.A. KWILLIAMS++)
+my $format  = GD::Image->can('gif') && GD::Image->new(1, 1)->gif
+    ? 'gif' : 'png';
 my $outfile = "t/1.$format";
 
 eval {
@@ -32,6 +33,7 @@ eval {
 ok !$@, "image file written as $outfile";
 ok -e $outfile, 'image file exists';
 
+__END__
 ok files_identical($outfile, "t/test.$format"), 'files are identical';
 
 # This sub lifted from KWILLIAMS' Image::Timeline test suite.

@@ -1,18 +1,7 @@
-#==============================================
-#    Copyright (c) 2003 Brad Murray
-#----------------------------------------------
-#
-#    Name: GD::Graph::radar.pm
-#
-#==============================================
-
 package GD::Graph::radar;
 
-$GD::Graph::pie::VERSION = '0.06';
-
+$GD::Graph::pie::VERSION = '0.08';
 use strict;
-
-use constant PI => 4 * atan2(1, 1);
 
 use GD;
 use GD::Graph;
@@ -23,7 +12,8 @@ use Carp;
 
 @GD::Graph::radar::ISA = qw(GD::Graph);
 
-my $ANGLE_OFFSET = 90;
+use constant PI => 4 * atan2(1, 1);
+use constant ANGLE_OFFSET => 90;
 
 my %Defaults = (
     # The angle at which to start the first data set
@@ -50,7 +40,7 @@ my %Defaults = (
     poly_fill => '#e4e4e4',
 );
 
-# PRIVATE
+# PRIVATE methods
 sub _has_default { 
     my $self = shift;
     my $attr = shift || return;
@@ -59,15 +49,18 @@ sub _has_default {
 
 sub initialise {
     my $self = shift;
+
     $self->SUPER::initialise();
+
     while (my ($key, $val) = each %Defaults) {
         $self->{$key} = $val;
     }
+
     $self->set_value_font(gdTinyFont);
     $self->set_label_font(gdSmallFont);
 }
 
-# PUBLIC methods, documented in pod
+# PUBLIC methods
 sub plot {
     my $self = shift;
     my $data = shift;
@@ -84,19 +77,22 @@ sub plot {
 
 sub set_label_font {  # (fontname)
     my $self = shift;
+
     $self->_set_font('gdta_label', @_) or return;
+
     $self->{gdta_label}->set_align('bottom', 'center');
 }
 
 sub set_value_font {  # (fontname)
     my $self = shift;
+
     $self->_set_font('gdta_value', @_) or return;
+
     $self->{gdta_value}->set_align('center', 'center');
 }
 
 # Inherit defaults() from GD::Graph
-
-# inherit checkdata from GD::Graph
+# Inherit checkdata from GD::Graph
 
 # Setup the coordinate system and colours, calculate the
 # relative axis coordinates in respect to the canvas size.
@@ -105,7 +101,6 @@ sub setup_coords() {
     my $self = shift;
 
     # Make sure we're not reserving space we don't need.
-
     my $tfh = $self->{title} ? $self->{gdta_title}->get('height') : 0;
     my $lfh = $self->{label} ? $self->{gdta_label}->get('height') : 0;
 
@@ -135,7 +130,7 @@ sub setup_coords() {
     return $self;
 }
 
-# inherit open_graph from GD::Graph
+# Inherit open_graph from GD::Graph
 
 # Setup the parameters for the text elements
 sub setup_text {
@@ -170,7 +165,6 @@ sub draw_text {
 }
 
 # Draw the data lines and the polygon
-
 sub draw_data {
     my $self = shift;
 
@@ -184,12 +178,9 @@ sub draw_data {
         if ($_ < $min_val) { $min_val = $_; }
     }
 
-    if ($self->{absolute}) {
-        $scale = ($self->{w} / 2) / $max_val;
-    }
-    else {
-        $scale = ($self->{w} / 2) / ($max_val - $min_val);
-    }
+    $scale = $self->{absolute}
+        ? ($self->{w} / 2) / $max_val
+        : ($self->{w} / 2) / ($max_val - $min_val);
        
     my $ac = $self->{acci};  # Accent colour
     my $pb = $self->{start_angle};
@@ -215,40 +206,41 @@ sub draw_data {
         # Calculate the end points of the lines at the boundaries of
         # the pie slice
         my $radius = $values[$i] * $scale;
-        if ($radius < 0 && $self->{absolute}) {
-            $radius = 0;
-        }
+
+        $radius = 0 if $radius < 0 && $self->{absolute};
+
         my ($xe, $ye) = cartesian(
             $radius,
             $pa, 
             $self->{xc}, $self->{yc},
             $self->{h} / $self->{w}
         );
-        if ($self->{polygon}) {
-            $poly->addPt($xe, $ye);
-        }
-        push(@vertices, [$xe, $ye]);
 
+        $poly->addPt($xe, $ye) if $self->{polygon};
+
+        push @vertices, [$xe, $ye];
     }
 
     # draw the apex polygon
     $self->{graph}->polygon($poly, $ac);
+
     if (defined $self->{poly_fill}) {
         my ($r, $g, $b) = GD::Graph::colour::hex2rgb($self->{poly_fill});
+
         my $fc = $self->{graph}->colorAllocate($r, $g, $b);
+
         $self->{graph}->fill($self->{xc}, $self->{yc}, $fc);
     }
 
     # draw markers
     my $mark_incr = 1;
-    if ($self->{absolute}) {
-        $mark_incr = int ($max_val / $self->{nmarkers});
-    }
-    else {
-        $mark_incr = int (($max_val - $min_val) / $self->{nmarkers});
-    }
+    $mark_incr = $self->{absolute}
+        ? int ($max_val / $self->{nmarkers})
+        : int (($max_val - $min_val) / $self->{nmarkers});
+
     for (1 .. $self->{nmarkers}) {
         my $width = 2 * $_ * $mark_incr * $scale;
+
         $self->{graph}->arc(
             $self->{xc}, $self->{yc},
             $width,
@@ -260,6 +252,7 @@ sub draw_data {
 
     # draw radar value bars
     my $dc = $self->{graph}->colorAllocate(0, 0, 0);
+
     for (@vertices) {
         $self->{graph}->line(
             $self->{xc}, $self->{yc},
@@ -270,6 +263,7 @@ sub draw_data {
 
     # draw labels
     $pb = $self->{start_angle};
+
     for (my $i = 0; $i < @values; $i++) {
         next unless $values[$i];
 
@@ -310,8 +304,8 @@ sub cartesian {
     my ($r, $phi, $xi, $yi, $cr) = @_; 
 
     return (
-        $xi + $r * cos(PI * ($phi + $ANGLE_OFFSET) / 180),
-        $yi + $cr * $r * sin(PI * ($phi + $ANGLE_OFFSET) / 180)
+        $xi + $r * cos (PI * ($phi + ANGLE_OFFSET) / 180),
+        $yi + $cr * $r * sin (PI * ($phi + ANGLE_OFFSET) / 180)
     )
 }
 
@@ -342,10 +336,6 @@ This module is based on C<GD::Graph::pie> with the exception of
 changes to the default settings, the C<draw_data> method, and 
 elimination of the pie specific code.
 
-=head1 ABSTRACT
-
-Make radial bar charts
-
 =head1 SEE ALSO
 
 L<GD::Graph>
@@ -360,7 +350,7 @@ Original code by Brad J. Murray E<lt>bjm@phreeow.netE<gt>
 
 Maintenance and CPAN distribution by Gene Boggs E<lt>gene@cpan.orgE<gt>
 
-GD::Graph by Martien Verbruggen E<lt>mgjv@tradingpost.com.auE<gt>
+C<GD::Graph> by Martien Verbruggen E<lt>mgjv@tradingpost.com.auE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

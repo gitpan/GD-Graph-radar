@@ -28,6 +28,15 @@ Revision history for GD::Graph::radar
     - Added binmode to the file slurping done in the test.  Thanks
       DrForr!
 
-0.06  Thu Jul 10 203
+0.06  Thu Jul 10 2003
     - Holy #@$%!  I totally forgot to run my test, and it had a
-      $#@%ing syntax error in it.  *sob*
+      syntax error in it.
+
+0.07  Thu Jul 10 2003
+    - Excised the unnecessary =head1 ABSTRACT section.
+
+0.08  Sun Aug  3 2003
+    - Cleaned code syntax a bit (not the functionality!).
+    - Fixed POD up.
+    - Removed the file comparison test so that Solaris boxes don't
+      whine.
