@@ -45,3 +45,6 @@ Revision history for GD::Graph::radar
     - No-one will give me an account on a Solaris box, so I added a
       SKIP if $^O eq 'solaris' for the image comparison, in my test
       script.
+
+0.10  Wed Aug  6 2003
+    - Aw. I had my tests => number wrong. Stupid me.
