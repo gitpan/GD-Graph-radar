@@ -15,3 +15,7 @@ Revision history for GD::Graph::radar
       Thanks Ken Williams!  : )
     - Fixed the README file.
     - Removed the pie-radar diff file.
+    - Fixed the POD up a bit.
+
+0.03.1  Tue Jul 8 2003  
+    - Fixed the POD up a bit more.

@@ -8,7 +8,7 @@
 
 package GD::Graph::radar;
 
-$GD::Graph::pie::VERSION = '0.03';
+$GD::Graph::pie::VERSION = '0.03.1';
 
 use strict;
 
@@ -330,11 +330,11 @@ GD::Graph::radar - Make radial bar charts
   my $radar = GD::Graph::radar->new(400, 400);
 
   my $image = $radar->plot([
-      [ qw( a    b  c    d    e    f    g  h    i )],
-      [     3.2, 9, 4.4, 3.9, 4.1, 4.3, 7, 6.1, 5  ]
+      [qw(a    b  c    d    e    f    g  h    i)],
+      [   3.2, 9, 4.4, 3.9, 4.1, 4.3, 7, 6.1, 5 ]
   ]);
 
-  print $image->png;  # Or ->gif, if you're that sort of person.
+  print $image->png;  # Or ->gif, or ->jpeg, or...
 
 =head1 DESCRIPTION
 
@@ -350,15 +350,15 @@ Make radial bar charts
 
 L<GD::Graph>
 
-L<GD::Graph::pie>
+C<GD::Graph::pie>
 
 C<http://www.phreeow.net/radar/>
 
 =head1 AUTHOR
 
-Brad J. Murray E<lt>bjm@phreeow.netE<gt>
+Original code by Brad J. Murray E<lt>bjm@phreeow.netE<gt>
 
-CPAN distribution by Gene Boggs E<lt>gene@cpan.orgE<gt>
+Maintenance and CPAN distribution by Gene Boggs E<lt>gene@cpan.orgE<gt>
 
 GD::Graph by Martien Verbruggen E<lt>mgjv@tradingpost.com.auE<gt>
 

@@ -13,13 +13,13 @@ ok !$@, 'object created';
 my $i;
 eval {
     $i = $g->plot([
-        [ qw( a    b  c    d    e    f    g  h    i )],
-        [     3.2, 9, 4.4, 3.9, 4.1, 4.3, 7, 6.1, 5  ]
+        [qw(a    b  c    d    e    f    g  h    i)],
+        [   3.2, 9, 4.4, 3.9, 4.1, 4.3, 7, 6.1, 5 ]
     ]);
 };
 ok !$@, 'image plotted';
 
-# MrDath++ (A.K.A. DrMath++ KWILLIAMS++)
+# MrDath++ (A.K.A. DrMath++ && KWILLIAMS++)
 my $format  = GD::Image->new(1, 1)->gif ? 'gif' : 'png';
 my $outfile = "t/1.$format";
 
