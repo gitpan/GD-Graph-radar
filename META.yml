@@ -1,0 +1,15 @@
+--- #YAML:1.0
+name:                GD-Graph-radar
+version:             0.0902
+abstract:            Make radial bar charts
+license:             ~
+author:              
+    - Gene Boggs <gene@cpan.org>
+generated_by:        ExtUtils::MakeMaker version 6.38
+distribution_type:   module
+requires:     
+    GD:                            0
+    GD::Graph:                     0
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3

@@ -1,9 +1,10 @@
 Changes
 lib/GD/Graph/radar.pm
 Makefile.PL
-MANIFEST
-MANIFEST.SKIP
+MANIFEST			This list of files
 README
-t/1.t
-t/test.gif
+t/GD-Graph-radar.gif
+t/GD-Graph-radar.png
+t/GD-Graph-radar.t
 t/test.png
+META.yml                                 Module meta-data (added by MakeMaker)

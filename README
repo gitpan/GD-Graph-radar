@@ -12,17 +12,13 @@ To install this module type the following:
 
 DEPENDENCIES
 
-Make::Test
-
-Carp
-
 GD
 
 GD::Graph
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2003 Brad J. Murray
+Copyright (C) 2003-2007 Gene Boggs
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

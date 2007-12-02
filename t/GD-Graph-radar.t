@@ -1,7 +1,9 @@
+#!/usr/bin/perl
 use strict;
+use warnings;
 use Test::More tests => 7;
 
-BEGIN { use_ok 'GD::Graph::radar' };
+use_ok 'GD::Graph::radar';
 
 my $g;
 eval {
@@ -9,6 +11,7 @@ eval {
 };
 isa_ok $g, 'GD::Graph::radar';
 ok !$@, 'object created';
+warn $@ if $@;
 
 my $i;
 eval {
@@ -19,10 +22,9 @@ eval {
 };
 ok !$@, 'image plotted';
 
-# MrDath++ (A.K.A. DrMath++, A.K.A. KWILLIAMS++)
-my $format  = GD::Image->can('gif') && GD::Image->new(1, 1)->gif
-    ? 'gif' : 'png';
-my $outfile = "t/1.$format";
+my $format = 'png';#GD::Image->can('gif') && GD::Image->new(1, 1)->gif
+#    ? 'gif' : 'png';
+my $outfile = "t/test.$format";
 
 eval {
     open F, ">$outfile" or die "Can't open $outfile - $!\n";
@@ -33,12 +35,12 @@ eval {
 ok !$@, "image file written as $outfile";
 ok -e $outfile, 'image file exists';
 
-# I cannot get an account on a Solaris box to fix this test.  Anyway,
+# I cannot get an account on a Solaris box to fix this test.
 # I suspect that the problem is endian-ness...
 SKIP: {
     skip 'Ack! Solaris! Run!', 1 if $^O eq 'solaris';
 
-    ok files_identical($outfile, "t/test.$format"), 'files are identical';
+    ok files_identical($outfile, "t/GD-Graph-radar.$format"), 'files are identical';
 
     # This sub lifted from KWILLIAMS' Image::Timeline test suite.
     sub files_identical {

@@ -1,23 +1,20 @@
+# $Id: radar.pm 785 2007-12-02 03:46:03Z gene $
 package GD::Graph::radar;
-
-$GD::Graph::pie::VERSION = '0.10';
+$GD::Graph::radar::VERSION = '0.0902';
+use base qw(GD::Graph);
 use strict;
-
-use GD;
-use GD::Graph;
-use GD::Graph::utils qw(:all);
-use GD::Graph::colour qw(:colours :lists);
-use GD::Text::Align;
+use warnings;
 use Carp;
-
-@GD::Graph::radar::ISA = qw(GD::Graph);
+use GD;
+use GD::Graph::colour qw(:colours :lists);
+use GD::Graph::utils qw(:all);
+use GD::Text::Align;
 
 use constant PI => 4 * atan2(1, 1);
 use constant ANGLE_OFFSET => 90;
 
 my %Defaults = (
-    # The angle at which to start the first data set
-    # 0 is pointing straight down
+    # The angle at which to start the first data set 0 is pointing straight down
     start_angle => 0,
 
     # and some public attributes without defaults
@@ -40,7 +37,6 @@ my %Defaults = (
     poly_fill => '#e4e4e4',
 );
 
-# PRIVATE methods
 sub _has_default { 
     my $self = shift;
     my $attr = shift || return;
