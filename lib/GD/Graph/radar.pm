@@ -1,6 +1,6 @@
 # $Id: radar.pm 785 2007-12-02 03:46:03Z gene $
 package GD::Graph::radar;
-$GD::Graph::radar::VERSION = '0.0902';
+$GD::Graph::radar::VERSION = '0.1001';
 use base qw(GD::Graph);
 use strict;
 use warnings;

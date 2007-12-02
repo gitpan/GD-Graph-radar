@@ -46,8 +46,8 @@ Revision history for GD::Graph::radar
       SKIP if $^O eq 'solaris' for the image comparison, in my test
       script.
 
-0.0901  Wed Aug  6 2003
+0.10  Wed Aug  6 2003
     - Aw. I had my tests => number wrong. Stupid me.
 
-0.0902  Sat Dec 1 2007
+0.1001  Sat Dec 1 2007
     - Cleaning up tests... Hopefully it will pass this time...
