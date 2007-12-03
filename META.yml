@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                GD-Graph-radar
-version:             0.1001
+version:             0.1002
 abstract:            Make radial bar charts
 license:             ~
 author:              

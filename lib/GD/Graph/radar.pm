@@ -1,6 +1,6 @@
-# $Id: radar.pm 785 2007-12-02 03:46:03Z gene $
+# $Id: radar.pm 800 2007-12-03 17:07:04Z gene $
 package GD::Graph::radar;
-$GD::Graph::radar::VERSION = '0.1001';
+$GD::Graph::radar::VERSION = '0.1002';
 use base qw(GD::Graph);
 use strict;
 use warnings;
@@ -337,8 +337,6 @@ elimination of the pie specific code.
 L<GD::Graph>
 
 C<GD::Graph::pie>
-
-C<http://www.phreeow.net/radar/>
 
 =head1 AUTHOR
 
