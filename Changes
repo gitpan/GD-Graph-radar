@@ -57,3 +57,6 @@ Revision history for GD::Graph::radar
     - Enhanced POD
     - Simplified methods test
 
+0.1101
+    - Whoops! Left-in t/test.png which defeats the purpose of the existence tests.
+

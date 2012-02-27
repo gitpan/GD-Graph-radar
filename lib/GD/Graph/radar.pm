@@ -4,7 +4,7 @@ package GD::Graph::radar;
 use strict;
 use warnings;
 
-our $VERSION = '0.11';
+our $VERSION = '0.1101';
 use base qw(GD::Graph);
 use GD;
 use GD::Graph::colour qw(:colours :lists);
