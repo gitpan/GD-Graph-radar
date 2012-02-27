@@ -51,3 +51,9 @@ Revision history for GD::Graph::radar
 
 0.1001  Sat Dec 1 2007
     - Cleaning up tests... Hopefully it will pass this time...
+
+0.11  Sun Feb 26 2012
+    - Refactored distribution with Dist::Zilla
+    - Enhanced POD
+    - Simplified methods test
+

@@ -1,11 +1,11 @@
 Changes
-GD-Graph-radar-0.1001.tar.gz
-lib/GD/Graph/radar.pm
+LICENSE
+MANIFEST
+META.yml
 Makefile.PL
-MANIFEST			This list of files
 README
-t/GD-Graph-radar.gif
-t/GD-Graph-radar.png
-t/GD-Graph-radar.t
+dist.ini
+lib/GD/Graph/radar.pm
+t/00-load.t
+t/01-methods.t
 t/test.png
-META.yml                                 Module meta-data (added by MakeMaker)

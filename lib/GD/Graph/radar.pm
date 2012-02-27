@@ -1,10 +1,11 @@
-# $Id: radar.pm 800 2007-12-03 17:07:04Z gene $
 package GD::Graph::radar;
-$GD::Graph::radar::VERSION = '0.1002';
-use base qw(GD::Graph);
+# ABSTRACT: Make radial bar charts
+
 use strict;
 use warnings;
-use Carp;
+
+our $VERSION = '0.11';
+use base qw(GD::Graph);
 use GD;
 use GD::Graph::colour qw(:colours :lists);
 use GD::Graph::utils qw(:all);
@@ -12,6 +13,36 @@ use GD::Text::Align;
 
 use constant PI => 4 * atan2(1, 1);
 use constant ANGLE_OFFSET => 90;
+
+=head1 NAME
+
+GD::Graph::radar - Make radial bar charts
+
+=head1 SYNOPSIS
+
+  use GD::Graph::radar;
+  my $radar = GD::Graph::radar->new(400, 400);
+  my $image = $radar->plot([
+      [qw( a    b  c    d    e    f    g  h    i )],
+      [qw( 3.2  9  4.4  3.9  4.1  4.3  7  6.1  5 )]
+  ]);
+  print $image->png;  #or ->gif, or ->jpeg, or...
+
+=head1 DESCRIPTION
+
+This module is based on C<GD::Graph::pie> with the exception of 
+changes to the default settings, the C<draw_data> method, and 
+elimination of the pie specific code.
+
+=head1 PUBLIC METHODS
+
+=head2 new()
+
+  $img = GD::Graph::radar->new();
+
+Create a new C<GD::Graph::radar> object.
+
+=cut
 
 my %Defaults = (
     # The angle at which to start the first data set 0 is pointing straight down
@@ -43,20 +74,12 @@ sub _has_default {
     exists $Defaults{$attr} || $self->SUPER::_has_default($attr);
 }
 
-sub initialise {
-    my $self = shift;
+=head2 plot()
 
-    $self->SUPER::initialise();
+Create the image.
 
-    while (my ($key, $val) = each %Defaults) {
-        $self->{$key} = $val;
-    }
+=cut
 
-    $self->set_value_font(gdTinyFont);
-    $self->set_label_font(gdSmallFont);
-}
-
-# PUBLIC methods
 sub plot {
     my $self = shift;
     my $data = shift;
@@ -71,29 +94,61 @@ sub plot {
     return $self->{graph};
 }
 
-sub set_label_font {  # (fontname)
+=head1 PRIVATE METHODS
+
+=head2 initialise()
+
+Setup defaults.
+
+=cut
+
+sub initialise {
     my $self = shift;
 
-    $self->_set_font('gdta_label', @_) or return;
+    $self->SUPER::initialise();
 
+    while (my ($key, $val) = each %Defaults) {
+        $self->{$key} = $val;
+    }
+
+    $self->set_value_font(gdTinyFont);
+    $self->set_label_font(gdSmallFont);
+}
+
+=head2 set_label_font()
+
+Set the font-name of the label.
+
+=cut
+
+sub set_label_font {
+    my $self = shift;
+    $self->_set_font('gdta_label', @_) or return;
     $self->{gdta_label}->set_align('bottom', 'center');
 }
 
-sub set_value_font {  # (fontname)
+=head2 set_value_font()
+
+Set the font-name of the value.
+
+=cut
+
+sub set_value_font {
     my $self = shift;
-
     $self->_set_font('gdta_value', @_) or return;
-
     $self->{gdta_value}->set_align('center', 'center');
 }
 
-# Inherit defaults() from GD::Graph
-# Inherit checkdata from GD::Graph
+=head2 setup_coords()
 
-# Setup the coordinate system and colours, calculate the
-# relative axis coordinates in respect to the canvas size.
+Setup the coordinate system and colours.  Calculate the relative axis
+coordinates with respect to the canvas size.
+
+=cut
 
 sub setup_coords() {
+    # Inherit defaults() from GD::Graph
+    # Inherit checkdata from GD::Graph
     my $self = shift;
 
     # Make sure we're not reserving space we don't need.
@@ -126,10 +181,14 @@ sub setup_coords() {
     return $self;
 }
 
-# Inherit open_graph from GD::Graph
+=head2 setup_text()
 
-# Setup the parameters for the text elements
+Setup the parameters for the text elements.
+
+=cut
+
 sub setup_text {
+    # Inherit open_graph from GD::Graph
     my $self = shift;
 
     if ($self->{title}) {
@@ -148,7 +207,12 @@ sub setup_text {
     return $self;
 }
 
-# Put the text on the canvas.
+=head2 draw_text()
+
+Put the text on the canvas.
+
+=cut
+
 sub draw_text {
     my $self = shift;
 
@@ -160,7 +224,12 @@ sub draw_text {
     return $self;
 }
 
-# Draw the data lines and the polygon
+=head2 draw_data()
+
+Draw the data lines and the polygon.
+
+=cut
+
 sub draw_data {
     my $self = shift;
 
@@ -278,10 +347,14 @@ sub draw_data {
     }
        
     return $self;
+}
 
-}  #GD::Graph::radar::draw_data
+=head2 put_slice_label()
 
-# put the slice label on the pie
+Put the slice label on the pie.
+
+=cut
+
 sub put_slice_label {
     my $self = shift;
     my ($x, $y, $label) = @_;
@@ -292,13 +365,16 @@ sub put_slice_label {
     $self->{gdta_value}->draw($x, $y);
 }
 
-# return x, y coordinates from input
-# radius, angle, center x and y and a scaling factor (height/width)
-#
-# $ANGLE_OFFSET is used to define where 0 is meant to be
-sub cartesian {
-    my ($r, $phi, $xi, $yi, $cr) = @_; 
+=head2 cartesian()
 
+Return x, y coordinates, radius, angle, center x and y, and a scaling
+factor (height/width).
+
+=cut
+
+sub cartesian {
+    # $ANGLE_OFFSET is used to define where 0 is meant to be
+    my ($r, $phi, $xi, $yi, $cr) = @_; 
     return (
         $xi + $r * cos (PI * ($phi + ANGLE_OFFSET) / 180),
         $yi + $cr * $r * sin (PI * ($phi + ANGLE_OFFSET) / 180)
@@ -306,49 +382,27 @@ sub cartesian {
 }
 
 1;
-
 __END__
-
-=head1 NAME
-
-GD::Graph::radar - Make radial bar charts
-
-=head1 SYNOPSIS
-
-  use GD::Graph::radar;
-
-  my $radar = GD::Graph::radar->new(400, 400);
-
-  my $image = $radar->plot([
-      [qw( a    b  c    d    e    f    g  h    i )],
-      [qw( 3.2  9  4.4  3.9  4.1  4.3  7  6.1  5 )]
-  ]);
-
-  print $image->png;  # Or ->gif, or ->jpeg, or...
-
-=head1 DESCRIPTION
-
-This module is based on C<GD::Graph::pie> with the exception of 
-changes to the default settings, the C<draw_data> method, and 
-elimination of the pie specific code.
 
 =head1 SEE ALSO
 
+* The code in the C<eg/> and C<t/> directories.
+
 L<GD::Graph>
 
-C<GD::Graph::pie>
+C<GD::Graph::pie> for an example of a similar plotting API.
 
 =head1 AUTHOR
 
 Original code by Brad J. Murray E<lt>bjm@phreeow.netE<gt>
 
-Maintenance and CPAN distribution by Gene Boggs E<lt>gene@cpan.orgE<gt>
-
-C<GD::Graph> by Martien Verbruggen E<lt>mgjv@tradingpost.com.auE<gt>
+Maintenance by Gene Boggs E<lt>gene@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
 Copyright 2003 by Brad J. Murray
+
+Copyright 2012 by Gene Boggs
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
